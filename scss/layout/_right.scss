@@ -1,0 +1,239 @@
+.right {
+  width: 100%;
+  max-width: 390px;
+  background-color: var(--base---dark-bg-2);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 140%;
+  color: var(--white);
+  padding-bottom: 24px;
+}
+
+.category {
+  display: flex;
+  gap: 8px;
+}
+
+.right-cat {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--primary-color);
+  padding: 7px 12px;
+  border: 1px solid var(--base---dark-line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.right-catAc {
+  color: var(--white);
+  background: var(--primary-color);
+  border: 1px solid var(--base---dark-line);
+}
+
+.right-cat:hover {
+  color: var(--white);
+  background: var(--primary-color);
+  border: 1px solid var(--base---dark-line);
+}
+
+.produc-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.status-name {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  color: var(--white);
+}
+
+.status-name:nth-child(2) {
+  margin-left: auto;
+}
+
+.status-name:last-child {
+  margin-left: 43px;
+}
+
+.product-right {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  border-top: 1px solid var(--base---dark-line);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 50vh;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pro-cart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pro-top {
+  display: flex;
+}
+
+.pro-top-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+
+.pro-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pro-name {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 130%;
+  color: var(--white);
+}
+
+.pro-price {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 140%;
+  color: var(--text-light);
+}
+
+.count-price {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.pro-bottom {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 21px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  color: var(--white);
+  border: 1px solid var(--base---dark-line);
+  border-radius: 8px;
+  width: 48px;
+  height: 48px;
+  background-color: var(--base---form-bg);
+}
+
+.price {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: right;
+  color: var(--white);
+}
+
+.pro-note {
+  display: inline-block;
+  border: 1px solid var(--base---dark-line);
+  border-radius: 8px;
+  padding: 14px 10px;
+  background-color: var(--base---form-bg);
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--text---lighter);
+  flex-grow: 1;
+}
+
+.pro-delate {
+  border: 1px solid var(--accents---red);
+  border-radius: 8px;
+  padding: 14px;
+  width: 48px;
+  height: 48px;
+  margin-left: 8px;
+}
+
+.pro-delate:hover {
+  border: 1px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 14px;
+  width: 48px;
+  height: 48px;
+  & svg {
+    stroke: var(--primary-color);
+  }
+}
+
+.pro-status-bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--base---dark-line);
+}
+
+.pro-discount,
+.pro-subTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pro-d,
+.pro-sub {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--text-light);
+}
+
+.pro-d-price,
+.pro-s-price {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: right;
+  color: var(--white);
+}
+
+.payment {
+  box-shadow: 0 8px 24px 0 rgba(234, 124, 105, 0.3);
+  border: 1px solid var(--primary-color);
+  background-color: var(--primary-color);
+  border-radius: 8px;
+  padding: 14px;
+  width: 100%;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  color: var(--base---bg);
+  transition: all 0.3s ease;
+}
+
+.payment:hover {
+  border: 1px solid var(--white);
+  color: var(--primary-color);
+  background-color: var(--white);
+}

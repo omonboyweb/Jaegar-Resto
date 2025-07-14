@@ -1,10 +1,13 @@
-import { getStorage } from "./storage.js";
 const productRight = document.querySelector(".product-right")
-const upArr = getStorage("wishlist");
+const proPriceSale = document.querySelector(".pro-d-price")
+const proSprice = document.querySelector(".pro-s-price")
+import { setStorage, getStorage } from "./storage.js";
+export let wishlist2 = getStorage("wishlist") || [];
+
 export function renderUser(data) {
-    productRight.innerHTML = data.map(item => {
-        return `
-    <div class="pro-cart">
+  productRight.innerHTML = data.map(item => {
+    return `
+  <div div class="pro-cart" >
             <div class="pro-top">
               <img
                 class="pro-top-img"
@@ -13,18 +16,22 @@ export function renderUser(data) {
               />
               <div class="pro-data">
                 <span class="pro-name">Spicy seasoned sea...</span>
-                <span class="pro-price">$ ${item.price}</span>
+                <span class="pro-price">$ ${item.sale}</span>
               </div>
               <div class="count-price">
-                <span class="count">1</span>
-                <span class="price">$ ${item.price}</span>
+              <div class="number-input count">
+  <button class="decrement">-</button>
+  <input type="number" value="1"  min="1" max="${item.total}"/>
+  <button class="increment">+</button>
+</div>
+          <span class="price">$ ${item.price}</span>
               </div>
             </div>
             <div class="pro-bottom">
               <span class="pro-note"
                 >Please, just a little bit spicy only.</span
               >
-              <button class="pro-delate">
+              <button class="pro-delate" data-id="${item.id}">
                 <svg
                   width="20"
                   height="20"
@@ -39,10 +46,41 @@ export function renderUser(data) {
                 </svg>
               </button>
             </div>
-          </div>
-    
+          </div >
     `
-    })
+  })
 }
-renderUser(upArr)
+productRight.addEventListener("click", (e) => {
+  const btnID = e.target.closest(".pro-delate");
+  if (!btnID) return;
+  const id = Number(btnID.dataset.id);
+  if (id) {
+    const index = wishlist2.findIndex(el => el.id === id);
+    if (index !== -1) wishlist2.splice(index, 1)
+    setStorage("wishlist", wishlist2)
+    renderUser(wishlist2)
+    setPriceCount()
+  }
+})
 
+
+
+
+function formatPrice(value) {
+  return `$ ${value.toFixed(2)}`;
+}
+
+export function setPriceCount() {
+  let res = wishlist2.reduce(
+    (acc, item) => {
+      acc.price += item.price;
+      acc.sale += item.sale;
+      return acc;
+    },
+    { price: 0, sale: 0 }
+  );
+  proPriceSale.textContent = formatPrice(res.sale);
+  proSprice.textContent = formatPrice(res.price);
+}
+
+setPriceCount()

@@ -1,20 +1,25 @@
-import { setStorage, getStorage } from "./storage.js";
+import { setStorage } from "./storage.js";
 import { getApi } from "./server.js";
-import { renderUser } from "./user.js";
+import { renderUser, setPriceCount, wishlist2 } from "./user.js";
+
 const productsAdd = document.querySelector(".products__block")
-let wishlist = getStorage("wishlists")
+
+renderUser(wishlist2);
 
 productsAdd.addEventListener("click", async (e) => {
     const id = Number(e.target.dataset.id)
     const path = e.target.dataset.path;
     if (!id && !path) return;
-    const smilar = wishlist.some(el => el.id === id)
+    const smilar = wishlist2.some(el => el.id === id)
     if (smilar) {
-        wishlist = wishlist.filter(el => el.id !== id)
+        const index = wishlist2.findIndex(el => el.id === id);
+        if (index !== -1) wishlist2.splice(index, 1)
     } else {
         const getId = await getApi(path, id);
-        wishlist.push(getId)
+        wishlist2.unshift(getId)
     }
-    setStorage("wishlist", wishlist);
-    renderUser(wishlist);
+    setStorage("wishlist", wishlist2);
+    renderUser(wishlist2);
+    setPriceCount();
 })
+

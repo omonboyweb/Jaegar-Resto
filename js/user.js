@@ -3,11 +3,10 @@ const proPriceSale = document.querySelector(".pro-d-price")
 const proSprice = document.querySelector(".pro-s-price")
 import { setStorage, getStorage } from "./storage.js";
 export let wishlist2 = getStorage("wishlist") || [];
-
 export function renderUser(data) {
   productRight.innerHTML = data.map(item => {
     return `
-  <div div class="pro-cart" >
+  <div div class="pro-cart">
             <div class="pro-top">
               <img
                 class="pro-top-img"
@@ -15,14 +14,14 @@ export function renderUser(data) {
                 alt="${item.title}"
               />
               <div class="pro-data">
-                <span class="pro-name">Spicy seasoned sea...</span>
+                <span class="pro-name">${item.title}</span>
                 <span class="pro-price">$ ${item.sale}</span>
               </div>
               <div class="count-price">
               <div class="number-input count">
-  <button class="decrement">-</button>
+  <button data-id="${item.id}" class="decrement">-</button>
   <input type="number" value="1"  min="1" max="${item.total}"/>
-  <button class="increment">+</button>
+  <button data-id="${item.id}" class="increment">+</button>
 </div>
           <span class="price">$ ${item.price}</span>
               </div>
@@ -50,25 +49,89 @@ export function renderUser(data) {
     `
   })
 }
+// }
+// productRight.addEventListener("click", (e) => {
+//   const btnID = e.target.closest(".pro-delate");
+//   const decrement = e.target.closest(".decrement")
+//   const increment = e.target.closest(".increment")
+//   const id = e.target.dataset.id;
+//   const counts = 1
+
+
+//   if (btnID) {
+//     if (!btnID) return;
+//     const id = Number(btnID.dataset.id);
+//     if (id) {
+//       const index = wishlist2.findIndex(el => el.id === id);
+//       if (index !== -1) wishlist2.splice(index, 1)
+//     }
+//   }
+//   if (decrement) {
+
+//   }
+//   else if (increment) {
+//     console.log(id);
+
+//   }
+//   setStorage("wishlist", wishlist2)
+//   renderUser(wishlist2)
+//   setPriceCount()
+// })
+
 productRight.addEventListener("click", (e) => {
   const btnID = e.target.closest(".pro-delate");
-  if (!btnID) return;
-  const id = Number(btnID.dataset.id);
-  if (id) {
+  const decrement = e.target.closest(".decrement");
+  const increment = e.target.closest(".increment");
+  const id = Number(e.target.dataset.id);
+
+  if (btnID) {
+    const id = Number(btnID.dataset.id);
+    if (!id) return;
+
     const index = wishlist2.findIndex(el => el.id === id);
-    if (index !== -1) wishlist2.splice(index, 1)
-    setStorage("wishlist", wishlist2)
-    renderUser(wishlist2)
-    setPriceCount()
+    if (index !== -1) wishlist2.splice(index, 1);
   }
-})
 
+  if (decrement || increment) {
+    const index = wishlist2.findIndex(el => el.id === id);
+    if (index === -1) return;
 
+    const item = wishlist2[index];
+
+    // Agar count mavjud bo'lmasa, yaratamiz
+    if (!('count' in item)) {
+      item.count = 1;
+    }
+
+    if (increment) {
+      item.count++;
+    }
+
+    if (decrement && item.count > 1) {
+      item.count--;
+    }
+
+    // totalni hisoblaymiz
+    item.price = item.price + item.price;
+
+    // inputni ham yangilaymiz
+    const inputEl = e.target
+      .closest(".number-input")
+      .querySelector("input");
+    if (inputEl) {
+      inputEl.value = item.count;
+    }
+  }
+
+  setStorage("wishlist", wishlist2);
+  renderUser(wishlist2);
+  setPriceCount();
+});
 
 
 function formatPrice(value) {
   return `$ ${value.toFixed(2)}`;
-}
+};
 
 export function setPriceCount() {
   let res = wishlist2.reduce(
@@ -84,3 +147,5 @@ export function setPriceCount() {
 }
 
 setPriceCount()
+
+

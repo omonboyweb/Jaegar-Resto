@@ -519,6 +519,18 @@ input {
   overflow-y: auto;
 }
 
+.similar {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  display: none;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+  gap: 24px;
+  overflow-y: auto;
+}
+
 .products__block::-webkit-scrollbar {
   width: 8px;
 }

@@ -20,10 +20,10 @@ export function renderUser(data) {
               <div class="count-price">
               <div class="number-input count">
   <button data-id="${item.id}" class="decrement">-</button>
-  <input type="number" value="1"  min="1" max="${item.total}"/>
+  <input type="number" value="${item.count}"  min="1" max="${item.total}"/>
   <button data-id="${item.id}" class="increment">+</button>
 </div>
-          <span class="price">$ ${item.price}</span>
+          <span class="price">$ ${item.price * item.count}</span>
               </div>
             </div>
             <div class="pro-bottom">
@@ -49,84 +49,36 @@ export function renderUser(data) {
     `
   })
 }
-// }
-// productRight.addEventListener("click", (e) => {
-//   const btnID = e.target.closest(".pro-delate");
-//   const decrement = e.target.closest(".decrement")
-//   const increment = e.target.closest(".increment")
-//   const id = e.target.dataset.id;
-//   const counts = 1
-
-
-//   if (btnID) {
-//     if (!btnID) return;
-//     const id = Number(btnID.dataset.id);
-//     if (id) {
-//       const index = wishlist2.findIndex(el => el.id === id);
-//       if (index !== -1) wishlist2.splice(index, 1)
-//     }
-//   }
-//   if (decrement) {
-
-//   }
-//   else if (increment) {
-//     console.log(id);
-
-//   }
-//   setStorage("wishlist", wishlist2)
-//   renderUser(wishlist2)
-//   setPriceCount()
-// })
 
 productRight.addEventListener("click", (e) => {
   const btnID = e.target.closest(".pro-delate");
-  const decrement = e.target.closest(".decrement");
-  const increment = e.target.closest(".increment");
-  const id = Number(e.target.dataset.id);
+  const decrement = e.target.closest(".decrement")
+  const increment = e.target.closest(".increment")
+  const id = e.target.dataset.id;
 
   if (btnID) {
+    if (!btnID) return;
     const id = Number(btnID.dataset.id);
-    if (!id) return;
-
-    const index = wishlist2.findIndex(el => el.id === id);
-    if (index !== -1) wishlist2.splice(index, 1);
-  }
-
-  if (decrement || increment) {
-    const index = wishlist2.findIndex(el => el.id === id);
-    if (index === -1) return;
-
-    const item = wishlist2[index];
-
-    // Agar count mavjud bo'lmasa, yaratamiz
-    if (!('count' in item)) {
-      item.count = 1;
-    }
-
-    if (increment) {
-      item.count++;
-    }
-
-    if (decrement && item.count > 1) {
-      item.count--;
-    }
-
-    // totalni hisoblaymiz
-    item.price = item.price + item.price;
-
-    // inputni ham yangilaymiz
-    const inputEl = e.target
-      .closest(".number-input")
-      .querySelector("input");
-    if (inputEl) {
-      inputEl.value = item.count;
+    if (id) {
+      const index = wishlist2.findIndex(el => el.id === id);
+      if (index !== -1) wishlist2.splice(index, 1)
     }
   }
 
-  setStorage("wishlist", wishlist2);
-  renderUser(wishlist2);
-  setPriceCount();
-});
+  if (increment) {
+    const res = wishlist2.find((obj) => obj.id == id);
+    res.count += 1;
+  }
+  if (decrement) {
+    const res = wishlist2.find((obj) => obj.id == id);
+    res.count -= 1;
+  }
+
+
+  setStorage("wishlist", wishlist2)
+  renderUser(wishlist2)
+  setPriceCount()
+})
 
 
 function formatPrice(value) {
@@ -136,8 +88,8 @@ function formatPrice(value) {
 export function setPriceCount() {
   let res = wishlist2.reduce(
     (acc, item) => {
-      acc.price += item.price;
-      acc.sale += item.sale;
+      acc.price += item.price * item.count;
+      acc.sale += item.sale * item.count;
       return acc;
     },
     { price: 0, sale: 0 }
@@ -147,5 +99,4 @@ export function setPriceCount() {
 }
 
 setPriceCount()
-
 

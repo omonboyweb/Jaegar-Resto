@@ -1,6 +1,6 @@
 import { setStorage } from "./storage.js";
 import { getApi } from "./server.js";
-import { renderUser, setPriceCount, wishlist2 } from "./user.js";
+import { renderUser, wishlist2, setPriceCount } from "./user.js";
 
 const productsAdd = document.querySelector(".products__block")
 
@@ -16,7 +16,7 @@ productsAdd.addEventListener("click", async (e) => {
         if (index !== -1) wishlist2.splice(index, 1)
     } else {
         const getId = await getApi(path, id);
-        wishlist2.unshift(getId)
+        wishlist2.unshift({ ...getId, count: 1 })
     }
     setStorage("wishlist", wishlist2);
     renderUser(wishlist2);
